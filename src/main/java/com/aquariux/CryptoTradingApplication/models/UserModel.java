@@ -18,4 +18,6 @@ public class UserModel {
 
     private List<WalletModel> wallets;
 
+    private List<TransactionModel> transactions;
+
 }

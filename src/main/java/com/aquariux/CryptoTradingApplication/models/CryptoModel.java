@@ -11,7 +11,7 @@ public class CryptoModel {
 
     private Long id;
 
-    private String ticker; // crypto pair might be a better name?
+    private String cryptoPair;
 
     private String descriptiveName;
 
