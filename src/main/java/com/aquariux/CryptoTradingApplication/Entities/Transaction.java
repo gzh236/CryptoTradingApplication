@@ -1,5 +1,6 @@
 package com.aquariux.CryptoTradingApplication.Entities;
 
+import com.aquariux.CryptoTradingApplication.constants.TradeActions;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
@@ -25,8 +26,9 @@ public class Transaction {
     @Column(nullable = false)
     private String cryptoPair;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private String tradeAction;
+    private TradeActions tradeAction;
 
     @Column(nullable = false)
     private BigDecimal amount;
