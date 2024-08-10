@@ -31,4 +31,26 @@ public class UserMapper {
                 .build();
     }
 
+    public static UserModel mapUserToModelWithoutWallets(User entity) {
+        if (Objects.isNull(entity)) {
+            return null;
+        }
+
+        return UserModel.builder()
+                .id(entity.getId())
+                .username(entity.getUsername())
+                .build();
+    }
+
+    public static User mapUserToEntityWithoutWallets(UserModel model) {
+        if (Objects.isNull(model)) {
+            return null;
+        }
+
+        return User.builder()
+                .id(model.getId())
+                .username(model.getUsername())
+                .build();
+    }
+
 }

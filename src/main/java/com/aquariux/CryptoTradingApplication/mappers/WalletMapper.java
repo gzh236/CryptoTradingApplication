@@ -1,11 +1,16 @@
 package com.aquariux.CryptoTradingApplication.mappers;
 
+import com.aquariux.CryptoTradingApplication.entities.User;
 import com.aquariux.CryptoTradingApplication.entities.Wallet;
+import com.aquariux.CryptoTradingApplication.models.UserModel;
 import com.aquariux.CryptoTradingApplication.models.WalletModel;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import static com.aquariux.CryptoTradingApplication.mappers.UserMapper.mapUserToEntityWithoutWallets;
+import static com.aquariux.CryptoTradingApplication.mappers.UserMapper.mapUserToModelWithoutWallets;
 
 public class WalletMapper {
 
@@ -13,8 +18,11 @@ public class WalletMapper {
         if (Objects.isNull(entity))
             return null;
 
+        UserModel userModel = mapUserToModelWithoutWallets(entity.getUser());
+
         return WalletModel.builder()
                 .id(entity.getId())
+                .user(userModel)
                 .balance(entity.getAmount())
                 .build();
     }
@@ -32,8 +40,11 @@ public class WalletMapper {
         if (Objects.isNull(model))
             return null;
 
+        User userEntity = mapUserToEntityWithoutWallets(model.getUser());
+
         return Wallet.builder()
                 .id(model.getId())
+                .user(userEntity)
                 .crypto(model.getCrypto())
                 .amount(model.getBalance())
                 .build();

@@ -1,6 +1,5 @@
 package com.aquariux.CryptoTradingApplication.controllers;
 
-import com.aquariux.CryptoTradingApplication.constants.TradeActions;
 import com.aquariux.CryptoTradingApplication.exceptions.TechnicalErrorException;
 import com.aquariux.CryptoTradingApplication.models.TradeRequestModel;
 import com.aquariux.CryptoTradingApplication.models.TransactionModel;
@@ -10,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 import java.util.List;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api/transactions")
@@ -38,7 +37,12 @@ public class TransactionController {
 
     @GetMapping(value = "/history")
     public ResponseEntity<List<TransactionModel>> getUserTransactionHistory(@RequestParam Long userId) {
-        return null; // TODO.
+        List<TransactionModel> res = service.retrieveUserTransactionHistory(userId);
+        if (Objects.isNull(res) || res.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(res);
     }
 
 

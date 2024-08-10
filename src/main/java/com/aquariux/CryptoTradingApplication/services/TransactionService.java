@@ -23,7 +23,9 @@ import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 import static com.aquariux.CryptoTradingApplication.constants.ApiConstants.USDT;
 
@@ -37,14 +39,14 @@ public class TransactionService {
 
     private final UserService userService;
 
-    private final TransactionRepository transactionRepository;
+    private final TransactionRepository repository;
 
     @Autowired
-    public TransactionService(PriceRetrievalService priceService, WalletService walletService, UserService userService, TransactionRepository transactionRepository) {
+    public TransactionService(PriceRetrievalService priceService, WalletService walletService, UserService userService, TransactionRepository repository) {
         this.priceService = priceService;
         this.walletService = walletService;
         this.userService = userService;
-        this.transactionRepository = transactionRepository;
+        this.repository = repository;
     }
 
     @Transactional
@@ -95,12 +97,23 @@ public class TransactionService {
                     .timeStamp(LocalDateTime.now())
                     .build();
 
-            return TransactionMapper.mapToModel(transactionRepository.save(transaction));
+            return TransactionMapper.mapToModel(repository.save(transaction));
 
         } catch (TickerNotFoundException | WalletNotFoundException | InsufficientFundsException e) {
             log.error("Transaction failed for user: {}, ticker: {}, action: {}. Error: {}", userId, ticker, action, e.getMessage());
             throw new TechnicalErrorException(e.getMessage());
         }
+
+    }
+
+    public List<TransactionModel> retrieveUserTransactionHistory(Long userId) {
+        Optional<List<Transaction>> optional = repository.findAllByUserId(userId);
+        if (optional.isEmpty()) {
+            log.error("No Transactions for user: {}", userId);
+            return null;
+        }
+
+        return TransactionMapper.mapToModelList(optional.get());
     }
 
 }
