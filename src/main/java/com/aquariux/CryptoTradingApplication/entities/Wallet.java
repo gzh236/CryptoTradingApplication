@@ -1,8 +1,10 @@
 package com.aquariux.CryptoTradingApplication.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
@@ -10,6 +12,8 @@ import java.math.BigDecimal;
 @Table(name = "wallets")
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Wallet {
 
     @Id
