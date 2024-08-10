@@ -15,6 +15,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -51,8 +52,8 @@ public class PriceAggregatorService {
                             .map(PricingData.class::cast)
                             .toList();
 
-                    BigDecimal bestBidPrice = aggregateBestPrice(pricingData, TradeActions.SELL);
-                    BigDecimal bestAskingPrice = aggregateBestPrice(pricingData, TradeActions.BUY);
+                    BigDecimal bestBidPrice = aggregateBestPrice(pricingData, TradeActions.SELL).setScale(2, RoundingMode.HALF_UP);
+                    BigDecimal bestAskingPrice = aggregateBestPrice(pricingData, TradeActions.BUY).setScale(2, RoundingMode.HALF_UP);
 
                     return createCryptoPriceEntity(ticker, bestBidPrice, bestAskingPrice);
                 })

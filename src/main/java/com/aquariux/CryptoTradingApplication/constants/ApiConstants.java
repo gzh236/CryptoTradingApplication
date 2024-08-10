@@ -10,5 +10,9 @@ public final class ApiConstants {
 
     public static final String ETHUSDT = "ETHUSDT";
 
+    public static final String USDT = "USDT";
+
+    public static final String INITIAL_USDT_BALANCE = "50000.00";
+
     private ApiConstants() {}
 }

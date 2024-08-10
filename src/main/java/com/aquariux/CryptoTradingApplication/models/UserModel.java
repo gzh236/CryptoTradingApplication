@@ -2,6 +2,7 @@ package com.aquariux.CryptoTradingApplication.models;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -14,10 +15,10 @@ public class UserModel {
 
     private String username;
 
-    private BigDecimal walletBalance;
-
+    @ToString.Exclude
     private List<WalletModel> wallets;
 
+    @ToString.Exclude
     private List<TransactionModel> transactions;
 
 }

@@ -38,7 +38,7 @@ public class Transaction {
     private BigDecimal amount;
 
     @Column(nullable = false)
-    private BigDecimal purchasePrice;
+    private BigDecimal price;
 
     @Column(nullable = false)
     private LocalDateTime timeStamp;

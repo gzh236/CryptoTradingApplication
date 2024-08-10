@@ -26,7 +26,7 @@ public class Wallet {
     private User user;
 
     @Column(nullable = false)
-    private String cryptoPair;
+    private String crypto;
 
     @Column(nullable = false)
     private BigDecimal amount;
