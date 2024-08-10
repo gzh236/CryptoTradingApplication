@@ -1,6 +1,6 @@
 package com.aquariux.CryptoTradingApplication.repositories;
 
-import com.aquariux.CryptoTradingApplication.Entities.CryptoPrice;
+import com.aquariux.CryptoTradingApplication.entities.CryptoPrice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
