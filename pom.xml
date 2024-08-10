@@ -12,7 +12,7 @@
 	<artifactId>CryptoTradingApplication</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>CryptoTradingApplication</name>
-	<description>CryptoTradingApplication for Technical Interview</description>
+	<description>CryptoTradingApplication</description>
 	<url/>
 	<licenses>
 		<license/>
@@ -59,6 +59,21 @@
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webflux</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.projectreactor</groupId>
+			<artifactId>reactor-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<!-- Mockito -->
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
