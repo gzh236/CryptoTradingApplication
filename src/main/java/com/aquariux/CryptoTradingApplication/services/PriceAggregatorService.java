@@ -41,6 +41,9 @@ public class PriceAggregatorService {
         Flux<BinancePricingData> binanceData = fetchPricingData(BINANCE_API, BinancePricingData.class);
         Flux<HuobiPricingData> huobiData = fetchPricingData(HUOBI_API, HuobiPricingData.class);
 
+        log.debug("Binance Data: {}", binanceData);
+        log.debug("Huobi Data: {}", huobiData);
+
         // finding best bid & ask price
         Flux.merge(binanceData, huobiData)
                 .collectMultimap(PricingData::getTicker)
@@ -70,6 +73,10 @@ public class PriceAggregatorService {
                 .uri(uri)
                 .retrieve()
                 .bodyToFlux(clazz)
+                .onErrorResume(e -> {
+                    log.error("Failed to retrieve data from {}: {}",uri, e.getMessage());
+                    return Mono.empty();
+                })
                 .filter(data -> BTCUSDT.equalsIgnoreCase(data.getTicker()) || ETHUSDT.equalsIgnoreCase(data.getTicker()));
     }
 
