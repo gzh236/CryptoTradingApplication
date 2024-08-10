@@ -9,7 +9,6 @@ import java.math.BigDecimal;
 
 @Data
 @Builder
-@ToString(exclude = "user")
 public class WalletModel {
 
     @Id
@@ -19,6 +18,7 @@ public class WalletModel {
 
     private BigDecimal balance;
 
+    @ToString.Exclude
     private UserModel user;
 
 }

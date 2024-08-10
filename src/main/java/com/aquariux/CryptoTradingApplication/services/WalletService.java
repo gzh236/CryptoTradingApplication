@@ -12,13 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
 import static com.aquariux.CryptoTradingApplication.constants.ApiConstants.INITIAL_USDT_BALANCE;
 import static com.aquariux.CryptoTradingApplication.constants.ApiConstants.USDT;
-import static com.aquariux.CryptoTradingApplication.mappers.WalletMapper.mapToEntity;
-import static com.aquariux.CryptoTradingApplication.mappers.WalletMapper.mapToModel;
+import static com.aquariux.CryptoTradingApplication.mappers.WalletMapper.*;
 
 @Service
 @Slf4j
@@ -89,6 +89,15 @@ public class WalletService {
                 .build();
 
         return repository.save(wallet);
+    }
+
+    public List<WalletModel> retrieveWalletsByUserId(Long userId) throws WalletNotFoundException {
+       Optional<List<Wallet>> optional = repository.findByUserId(userId);
+        if (optional.isEmpty()) {
+            throw new WalletNotFoundException("No wallets found for user ID: " + userId);
+        }
+
+        return mapToModelList(optional.get());
     }
 
 }

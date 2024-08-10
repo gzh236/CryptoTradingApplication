@@ -140,4 +140,44 @@ class WalletServiceTest {
 
         verify(repository, times(1)).save(any(Wallet.class));
     }
+
+    @Test
+    void shouldRetrieveWalletsByUserIdSuccessfully() throws WalletNotFoundException {
+        Wallet wallet1 = Wallet.builder()
+                .id(1L)
+                .user(mockUser)
+                .crypto(USDT)
+                .amount(new BigDecimal("10000.00"))
+                .build();
+
+        Wallet wallet2 = Wallet.builder()
+                .id(2L)
+                .user(mockUser)
+                .crypto("BTCUSDT")
+                .amount(new BigDecimal("0.5"))
+                .build();
+
+        List<Wallet> wallets = List.of(wallet1, wallet2);
+        when(repository.findByUserId(anyLong())).thenReturn(Optional.of(wallets));
+
+        List<WalletModel> result = walletService.retrieveWalletsByUserId(1L);
+
+        assertNotNull(result);
+        assertEquals(2, result.size());
+        assertEquals(USDT, result.get(0).getCrypto());
+        assertEquals(new BigDecimal("10000.00"), result.get(0).getBalance());
+        verify(repository, times(1)).findByUserId(1L);
+    }
+
+    @Test
+    void shouldThrowWalletNotFoundExceptionWhenNoWalletsFound() {
+        when(repository.findByUserId(anyLong())).thenReturn(Optional.empty());
+
+        WalletNotFoundException exception = assertThrows(WalletNotFoundException.class, () -> {
+            walletService.retrieveWalletsByUserId(1L);
+        });
+
+        assertEquals("No wallets found for user ID: 1", exception.getMessage());
+        verify(repository, times(1)).findByUserId(1L);
+    }
 }

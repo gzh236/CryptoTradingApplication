@@ -23,6 +23,7 @@ public class WalletMapper {
         return WalletModel.builder()
                 .id(entity.getId())
                 .user(userModel)
+                .crypto(entity.getCrypto())
                 .balance(entity.getAmount())
                 .build();
     }
