@@ -1,4 +1,4 @@
-package com.aquariux.CryptoTradingApplication.Entities;
+package com.aquariux.CryptoTradingApplication.entities;
 
 import jakarta.persistence.*;
 import lombok.Builder;
